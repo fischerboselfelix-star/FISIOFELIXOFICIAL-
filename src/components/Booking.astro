@@ -1,5 +1,4 @@
 ---
----
 const calendarUrl = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2BC7qlQaZiNfqdneIL574ngJwCj-7QaMPyc4EKyiU_s1xRqxFQX1pomi-LGXj5RzcJS-vkf5OQ?gv=true";
 const bookingsUrl = "";
 
@@ -100,34 +99,95 @@ const hasBoth     = hasCalendar && hasBookings;
           </div>
         )}
 
-        <!-- ✅ Google Calendar iframe CORREGIDO -->
+        <!-- ✅ Google Calendar — tarjeta + botón (funciona siempre) -->
         {hasCalendar && (
-          <div id="frame-google" role="tabpanel" class="calendar-frame">
-            <div class="rounded-3xl overflow-hidden border border-sky-100 shadow-soft bg-white">
-              <iframe
-                src={calendarUrl}
-                width="100%"
-                height="600"
-                frameborder="0"
-                scrolling="yes"
-                title="Agenda de citas — Google Calendar FisioFelix"
-                loading="lazy"
-                allow="camera; microphone; fullscreen"
-                style="border: none; border-radius: 1.5rem; display: block; min-height: 600px;"
-              ></iframe>
-            </div>
-            <!-- Enlace de respaldo por si el iframe bloquea -->
-            <p class="text-center text-xs text-slate-400 mt-3">
-              ¿No ves el calendario?
+          <div id="frame-google" class="calendar-frame">
+
+            <!-- Tarjeta visual del calendario -->
+            <div class="rounded-3xl border border-sky-100 shadow-soft bg-gradient-to-br
+                        from-sky-50 to-white p-8 text-center">
+
+              <!-- Icono grande -->
+              <div class="w-20 h-20 rounded-2xl bg-white shadow-card flex items-center
+                          justify-center mx-auto mb-5">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"
+                     stroke="#0EA5E9" stroke-width="1.6" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8"  y1="2" x2="8"  y2="6"/>
+                  <line x1="3"  y1="10" x2="21" y2="10"/>
+                  <line x1="8"  y1="14" x2="8"  y2="14" stroke-width="2.5"/>
+                  <line x1="12" y1="14" x2="12" y2="14" stroke-width="2.5"/>
+                  <line x1="16" y1="14" x2="16" y2="14" stroke-width="2.5"/>
+                  <line x1="8"  y1="18" x2="8"  y2="18" stroke-width="2.5"/>
+                  <line x1="12" y1="18" x2="12" y2="18" stroke-width="2.5"/>
+                </svg>
+              </div>
+
+              <h4 class="font-heading font-bold text-xl text-brand mb-2">
+                Reserva tu cita online
+              </h4>
+              <p class="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs mx-auto">
+                Elige el día y la hora que mejor te venga. El proceso tarda menos de 2 minutos.
+              </p>
+
+              <!-- Pasos rápidos -->
+              <div class="grid grid-cols-3 gap-3 mb-7">
+                {[
+                  { num: '1', text: 'Elige día y hora' },
+                  { num: '2', text: 'Añade tus datos' },
+                  { num: '3', text: '¡Listo!' },
+                ].map(step => (
+                  <div class="bg-white rounded-2xl p-3 shadow-soft">
+                    <div class="w-7 h-7 rounded-full bg-primary text-white text-xs
+                                font-bold flex items-center justify-center mx-auto mb-1.5">
+                      {step.num}
+                    </div>
+                    <p class="text-xs text-slate-500 leading-tight">{step.text}</p>
+                  </div>
+                ))}
+              </div>
+
+              <!-- Botón principal — abre Google Calendar en nueva pestaña -->
               <a
                 href={calendarUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-primary font-semibold hover:underline ml-1"
+                class="inline-flex items-center justify-center gap-2.5 w-full
+                       px-6 py-4 bg-primary hover:bg-primary-dark text-white
+                       font-semibold text-base rounded-2xl shadow-soft
+                       hover:shadow-hover hover:-translate-y-0.5
+                       transition-all duration-300"
+                aria-label="Abrir Google Calendar para reservar cita en FisioFelix"
               >
-                Ábrelo aquí →
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                     stroke="white" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8"  y1="2" x2="8"  y2="6"/>
+                  <line x1="3"  y1="10" x2="21" y2="10"/>
+                </svg>
+                Abrir calendario y reservar
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="white" stroke-width="2.5" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
               </a>
-            </p>
+
+              <p class="text-xs text-slate-400 mt-3 flex items-center justify-center gap-1">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Se abre de forma segura en Google Calendar
+              </p>
+            </div>
           </div>
         )}
 
