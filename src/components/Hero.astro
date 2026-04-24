@@ -1,0 +1,131 @@
+---
+---
+
+<section
+  id="inicio"
+  class="relative pt-24 md:pt-32 pb-20 md:pb-28 overflow-hidden"
+  style="background: linear-gradient(135deg, #FDFBF7 0%, #F0F9FF 55%, #E0F2FE 100%);"
+>
+  <!-- Blobs decorativos -->
+  <div
+    class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
+    style="background: radial-gradient(circle, #0EA5E9 0%, transparent 70%); transform: translate(30%, -30%);"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="absolute bottom-0 left-0 w-[350px] h-[350px] rounded-full opacity-10 pointer-events-none"
+    style="background: radial-gradient(circle, #10B981 0%, transparent 70%); transform: translate(-40%, 40%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+      <!-- ── Texto ── -->
+      <div class="order-2 lg:order-1 reveal">
+
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
+                    bg-sky-100 text-primary text-sm font-semibold mb-6">
+          <span class="w-2 h-2 rounded-full bg-accent animate-pulse2" aria-hidden="true"></span>
+          Fisioterapia avanzada en Denia
+        </div>
+
+        <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-brand mb-6 leading-[1.08]">
+          Tu recuperación,<br/>
+          <span class="text-primary">nuestra misión</span>
+        </h1>
+
+        <p class="text-lg text-slate-500 leading-relaxed mb-8 max-w-lg">
+          Fisioterapia avanzada en el corazón de Denia. Tratamientos personalizados
+          para que vuelvas a moverte sin dolor y con plenitud.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href="#reservar"
+            class="inline-flex items-center justify-center gap-2 px-7 py-4
+                   bg-primary hover:bg-primary-dark text-white font-semibold
+                   rounded-2xl shadow-soft hover:shadow-hover
+                   transition-all duration-300 hover:-translate-y-0.5 text-base"
+          >
+            Reserva tu cita
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a
+            href="#servicios"
+            class="inline-flex items-center justify-center gap-2 px-7 py-4
+                   border-2 border-sky-200 text-primary font-semibold
+                   rounded-2xl hover:bg-sky-50 transition-all duration-300
+                   hover:-translate-y-0.5 text-base"
+          >
+            Ver servicios
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex flex-wrap gap-8 mt-10 pt-8 border-t border-sky-100">
+          {[
+            { num: '500+', label: 'Pacientes tratados' },
+            { num: '6+',   label: 'Años de experiencia' },
+            { num: '98%',  label: 'Satisfacción' },
+          ].map(s => (
+            <div>
+              <p class="font-heading text-2xl font-bold text-primary">{s.num}</p>
+              <p class="text-sm text-slate-500">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- ── Imagen ── -->
+      <div class="order-1 lg:order-2 flex justify-center lg:justify-end reveal">
+        <div class="relative w-full max-w-md lg:max-w-lg">
+          <!-- Resplandor detrás -->
+          <div
+            class="absolute -inset-4 rounded-3xl blur-xl pointer-events-none"
+            style="background: linear-gradient(135deg, rgba(14,165,233,0.12), rgba(16,185,129,0.10));"
+            aria-hidden="true"
+          ></div>
+
+          <div class="relative rounded-3xl overflow-hidden shadow-hover">
+            <img
+              src="https://images.pexels.com/photos/20860609/pexels-photo-20860609.jpeg"
+              alt="Felix Maximo Fischer, fisioterapeuta de FisioFelix Denia, tratando a un paciente"
+              class="w-full h-[420px] md:h-[520px] object-cover"
+              loading="eager"
+              width="520"
+              height="520"
+            />
+            <div
+              class="absolute inset-0 pointer-events-none"
+              style="background: linear-gradient(to top, rgba(30,41,59,0.20), transparent);"
+              aria-hidden="true"
+            ></div>
+          </div>
+
+          <!-- Badge flotante -->
+          <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-card p-4
+                      flex items-center gap-3 min-w-[180px]">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#10B981" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-heading font-bold text-sm text-brand">Cita hoy</p>
+              <p class="text-xs text-slate-400">Atención inmediata</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

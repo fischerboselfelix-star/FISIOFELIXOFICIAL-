@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fisiofelix.es/sitemap-index.xml

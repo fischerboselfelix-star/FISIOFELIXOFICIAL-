@@ -1,0 +1,152 @@
+---
+const navLinks = [
+  { label: 'Inicio',    href: '#inicio' },
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Equipo',    href: '#equipo' },
+  { label: 'Ubicación', href: '#ubicacion' },
+  { label: 'Reservar',  href: '#reservar' },
+];
+---
+
+<header
+  id="header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300
+         backdrop-blur-xl bg-white/90 border-b border-sky-100/60"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+
+      <!-- Logo -->
+      <a href="#inicio" class="flex items-center gap-2.5 group" aria-label="FisioFelix - Volver al inicio">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary-dark
+                    flex items-center justify-center shadow-soft
+                    group-hover:shadow-card transition-shadow duration-300">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+               xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M10 2C10 2 7 5 7 8C7 9.66 8.34 11 10 11C11.66 11 13 9.66 13 8C13 5 10 2 10 2Z"
+                  fill="white" opacity="0.9"/>
+            <path d="M10 11V18M10 14H13M10 14H7"
+                  stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-heading font-bold text-xl text-brand tracking-tight">
+          Fisio<span class="text-primary">Felix</span>
+        </span>
+      </a>
+
+      <!-- Nav desktop -->
+      <nav class="hidden md:flex items-center gap-1" aria-label="Navegación principal">
+        {navLinks.map(link => (
+          <a
+            href={link.href}
+            class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600
+                   hover:text-primary hover:bg-sky-50 transition-all duration-200"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- CTA desktop -->
+      <div class="hidden md:flex items-center gap-3">
+        <a
+          href="tel:+34617627016"
+          class="text-sm font-medium text-slate-500 hover:text-primary transition-colors"
+        >
+          +34 617 62 70 16
+        </a>
+        <a
+          href="#reservar"
+          class="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white text-sm font-semibold
+                 rounded-2xl shadow-soft hover:shadow-card transition-all duration-300
+                 hover:-translate-y-0.5"
+        >
+          Reservar ahora
+        </a>
+      </div>
+
+      <!-- Botón hamburguesa mobile -->
+      <button
+        id="menu-toggle"
+        aria-label="Abrir menú de navegación"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="md:hidden p-2 rounded-xl text-slate-600 hover:bg-sky-50 transition-colors"
+      >
+        <svg id="icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6"  x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg id="icon-close" class="hidden" width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6"  x2="6"  y2="18"/>
+          <line x1="6"  y1="6"  x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Menú móvil desplegable -->
+    <div
+      id="mobile-menu"
+      role="navigation"
+      aria-label="Menú móvil"
+      class="md:hidden overflow-hidden max-h-0 transition-all duration-300 ease-in-out"
+    >
+      <div class="pb-4 flex flex-col gap-1">
+        {navLinks.map(link => (
+          <a
+            href={link.href}
+            class="mobile-link px-4 py-3 rounded-xl text-sm font-medium text-slate-600
+                   hover:text-primary hover:bg-sky-50 transition-all duration-200"
+          >
+            {link.label}
+          </a>
+        ))}
+        <a
+          href="#reservar"
+          class="mobile-link mt-2 px-5 py-3 bg-primary text-white text-sm font-semibold
+                 rounded-2xl text-center shadow-soft"
+        >
+          Reservar ahora
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle      = document.getElementById('menu-toggle') as HTMLButtonElement;
+  const menu        = document.getElementById('mobile-menu') as HTMLDivElement;
+  const iconOpen    = document.getElementById('icon-open') as SVGElement;
+  const iconClose   = document.getElementById('icon-close') as SVGElement;
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+  const header      = document.getElementById('header') as HTMLElement;
+
+  function openMenu() {
+    menu.style.maxHeight = menu.scrollHeight + 'px';
+    toggle.setAttribute('aria-expanded', 'true');
+    iconOpen.classList.add('hidden');
+    iconClose.classList.remove('hidden');
+  }
+
+  function closeMenu() {
+    menu.style.maxHeight = '0';
+    toggle.setAttribute('aria-expanded', 'false');
+    iconOpen.classList.remove('hidden');
+    iconClose.classList.add('hidden');
+  }
+
+  toggle.addEventListener('click', () => {
+    const isOpen = menu.style.maxHeight && menu.style.maxHeight !== '0px';
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+  // Sombra al hacer scroll
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('shadow-soft', window.scrollY > 20);
+  }, { passive: true });
+</script>

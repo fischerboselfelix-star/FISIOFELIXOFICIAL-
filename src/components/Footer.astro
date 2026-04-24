@@ -1,0 +1,179 @@
+---
+const year = new Date().getFullYear();
+
+const linksClinica = [
+  { label: 'Inicio',    href: '#inicio' },
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Equipo',    href: '#equipo' },
+  { label: 'Reservar',  href: '#reservar' },
+  { label: 'Ubicación', href: '#ubicacion' },
+];
+
+const linksLegal = [
+  { label: 'Política de privacidad', href: '#' },
+  { label: 'Aviso legal',            href: '#' },
+  { label: 'Política de cookies',    href: '#' },
+];
+
+const socialLinks = [
+  {
+    label: 'Instagram',
+    href:  'https://instagram.com/fisiofelix_denia',
+    icon:  `<rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>`,
+  },
+  {
+    label: 'Facebook',
+    href:  'https://facebook.com/fisiofelix',
+    icon:  `<path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>`,
+  },
+];
+---
+
+<footer class="bg-brand text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+
+    <!-- Grid principal -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+      <!-- Logo + descripción + redes -->
+      <div class="sm:col-span-2 lg:col-span-1">
+        <a href="#inicio" class="flex items-center gap-2.5 mb-4 group w-fit"
+           aria-label="FisioFelix - Volver al inicio">
+          <div class="w-9 h-9 rounded-xl bg-white/10 border border-white/20
+                      flex items-center justify-center
+                      group-hover:bg-primary/30 transition-colors duration-200">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 2C10 2 7 5 7 8C7 9.66 8.34 11 10 11C11.66 11 13 9.66 13 8C13 5 10 2 10 2Z"
+                    fill="white" opacity="0.9"/>
+              <path d="M10 11V18M10 14H13M10 14H7"
+                    stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="font-heading font-bold text-xl tracking-tight">
+            Fisio<span class="text-primary">Felix</span>
+          </span>
+        </a>
+
+        <p class="text-slate-400 text-sm leading-relaxed mb-5 max-w-[220px]">
+          Fisioterapia avanzada en el corazón de Denia. Tu salud y movilidad,
+          nuestra prioridad desde 2018.
+        </p>
+
+        <!-- Redes sociales -->
+        <div class="flex gap-2.5">
+          {socialLinks.map(s => (
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              class="w-9 h-9 rounded-xl bg-white/5 border border-white/10
+                     hover:bg-primary/20 hover:border-primary/40
+                     flex items-center justify-center transition-all duration-200"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <Fragment set:html={s.icon} />
+              </svg>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- La clínica -->
+      <div>
+        <p class="font-heading font-semibold text-xs mb-5 uppercase tracking-widest text-slate-400">
+          La clínica
+        </p>
+        <ul class="space-y-3">
+          {linksClinica.map(l => (
+            <li>
+              <a
+                href={l.href}
+                class="text-slate-400 hover:text-primary text-sm transition-colors duration-200"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <p class="font-heading font-semibold text-xs mb-5 uppercase tracking-widest text-slate-400">
+          Legal
+        </p>
+        <ul class="space-y-3">
+          {linksLegal.map(l => (
+            <li>
+              <a
+                href={l.href}
+                class="text-slate-400 hover:text-primary text-sm transition-colors duration-200"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <p class="font-heading font-semibold text-xs mb-5 uppercase tracking-widest text-slate-400">
+          Contacto
+        </p>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-2.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="text-slate-500 mt-0.5 flex-shrink-0" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span class="text-slate-400 text-sm leading-snug">
+              Calle Avenida Campo Torres 39,<br/>Denia, Alicante
+            </span>
+          </li>
+          <li>
+            <a href="tel:+34617627016"
+               class="flex items-center gap-2.5 text-slate-400 hover:text-primary text-sm transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="flex-shrink-0" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+              +34 617 62 70 16
+            </a>
+          </li>
+          <li>
+            <a href="mailto:fischerboselfelix@gmail.com"
+               class="flex items-start gap-2.5 text-slate-400 hover:text-primary text-sm transition-colors break-all">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="flex-shrink-0 mt-0.5" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              fischerboselfelix@gmail.com
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Divisor -->
+    <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center
+                justify-between gap-4 text-xs text-slate-500">
+      <p>© {year} FisioFelix · Todos los derechos reservados</p>
+      <p class="flex items-center gap-1">
+        Diseñado con
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#ef4444" stroke="none" aria-label="amor">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+        </svg>
+        en Denia, España
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,109 @@
+---
+const services = [
+  {
+    icon: `<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>`,
+    title: 'Fisioterapia deportiva',
+    desc:  'Recuperación y prevención de lesiones para deportistas de todos los niveles. Protocolos adaptados a tu actividad.',
+  },
+  {
+    icon: `<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>`,
+    title: 'Rehabilitación post-quirúrgica',
+    desc:  'Programa de recuperación estructurado tras intervenciones quirúrgicas para devolverte la movilidad completa.',
+  },
+  {
+    icon: `<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>`,
+    title: 'Masaje terapéutico',
+    desc:  'Técnicas manuales especializadas para aliviar tensiones musculares, mejorar la circulación y reducir el dolor.',
+  },
+  {
+    icon: `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>`,
+    title: 'Pilates clínico',
+    desc:  'Ejercicio terapéutico supervisado para mejorar la postura, el core y la estabilidad articular de forma progresiva.',
+  },
+  {
+    icon: `<path d="M13 10V3L4 14h7v7l9-11h-7z"/>`,
+    title: 'Electroterapia',
+    desc:  'Corrientes terapéuticas de alta precisión (TENS, ultrasonidos, láser) para acelerar la recuperación tisular.',
+  },
+  {
+    icon: `<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>`,
+    title: 'Osteopatía',
+    desc:  'Abordaje global del cuerpo mediante manipulaciones osteopáticas para restaurar el equilibrio y la funcionalidad.',
+  },
+];
+---
+
+<section id="servicios" class="py-20 md:py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Encabezado -->
+    <div class="text-center mb-16 reveal">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
+                  bg-sky-100 text-primary text-sm font-semibold mb-4">
+        Nuestros tratamientos
+      </div>
+      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-brand mb-4">
+        Servicios especializados
+      </h2>
+      <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+        Un enfoque integral de la fisioterapia para cada etapa de tu recuperación,
+        desde la lesión hasta el rendimiento óptimo.
+      </p>
+    </div>
+
+    <!-- Grid bento 3×2 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {services.map((service, i) => (
+        <article
+          class="reveal group relative p-7 bg-white border border-slate-100 rounded-3xl
+                 shadow-soft hover:shadow-hover hover:-translate-y-1
+                 transition-all duration-300 overflow-hidden"
+          style={`transition-delay: ${i * 60}ms`}
+        >
+          <!-- Fondo hover -->
+          <div
+            class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100
+                   transition-opacity duration-300 pointer-events-none"
+            style="background: linear-gradient(135deg, rgba(240,249,255,0) 0%, rgba(240,249,255,0.85) 100%);"
+            aria-hidden="true"
+          ></div>
+
+          <div class="relative">
+            <!-- Icono -->
+            <div class="w-12 h-12 rounded-2xl bg-sky-100 group-hover:bg-primary/10
+                        flex items-center justify-center mb-5 transition-colors duration-300">
+              <svg
+                width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="#0EA5E9" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <Fragment set:html={service.icon} />
+              </svg>
+            </div>
+
+            <h3 class="font-heading font-semibold text-lg text-brand mb-2 tracking-tight">
+              {service.title}
+            </h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-4">
+              {service.desc}
+            </p>
+
+            <a
+              href="#reservar"
+              class="inline-flex items-center gap-1 text-sm font-semibold text-primary
+                     hover:gap-2.5 transition-all duration-200"
+            >
+              Más info
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2.5"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

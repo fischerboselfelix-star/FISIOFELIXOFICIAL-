@@ -1,0 +1,295 @@
+---
+// La URL del backend se inyecta vía variable de entorno PUBLIC_BACKEND_URL
+// Definida en .env o en Vercel → Settings → Environment Variables
+---
+
+<!-- ── Botón flotante ── -->
+<button
+  id="chat-toggle"
+  type="button"
+  aria-label="Abrir asistente virtual de FisioFelix"
+  aria-expanded="false"
+  aria-controls="chat-panel"
+  class="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full
+         bg-primary text-white
+         flex items-center justify-center
+         hover:scale-110 hover:bg-primary-dark
+         transition-all duration-300 group"
+  style="box-shadow: 0 4px 20px rgba(14,165,233,0.45);"
+>
+  <!-- Icono: chat abierto -->
+  <svg id="chat-icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none"
+       stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+       aria-hidden="true">
+    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+  </svg>
+  <!-- Icono: cerrar -->
+  <svg id="chat-icon-close" class="hidden" width="22" height="22" viewBox="0 0 24 24"
+       fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"
+       stroke-linejoin="round" aria-hidden="true">
+    <line x1="18" y1="6"  x2="6"  y2="18"/>
+    <line x1="6"  y1="6"  x2="18" y2="18"/>
+  </svg>
+
+  <!-- Indicador online -->
+  <span class="absolute top-0.5 right-0.5 w-3 h-3 bg-accent border-2 border-white rounded-full"
+        aria-hidden="true"></span>
+</button>
+
+<!-- ── Panel del chat ── -->
+<div
+  id="chat-panel"
+  role="dialog"
+  aria-label="Chat con el asistente virtual de FisioFelix"
+  aria-modal="false"
+  class="fixed bottom-24 right-5 z-50
+         w-[340px] max-w-[calc(100vw-2rem)]
+         bg-white rounded-3xl
+         border border-sky-100
+         flex flex-col overflow-hidden
+         transition-all duration-300 origin-bottom-right
+         scale-90 opacity-0 pointer-events-none"
+  style="height: 490px; box-shadow: 0 20px 60px rgba(14,165,233,0.18);"
+>
+
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-primary to-primary-dark px-5 py-4
+              flex items-center gap-3 flex-shrink-0">
+    <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+    </div>
+    <div class="flex-1 min-w-0">
+      <p class="font-heading font-semibold text-white text-sm leading-tight">
+        Asistente FisioFelix
+      </p>
+      <p class="text-xs text-white/70 flex items-center gap-1 mt-0.5">
+        <span class="w-1.5 h-1.5 bg-accent rounded-full inline-block" aria-hidden="true"></span>
+        En línea ahora
+      </p>
+    </div>
+    <button
+      id="chat-minimize"
+      type="button"
+      aria-label="Minimizar chat"
+      class="text-white/60 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/10"
+    >
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Área de mensajes -->
+  <div
+    id="chat-messages"
+    class="flex-1 overflow-y-auto p-4 space-y-3 scroll-smooth"
+    aria-live="polite"
+    aria-label="Historial de mensajes"
+  >
+    <!-- Mensaje inicial del bot -->
+    <div class="flex items-start gap-2.5">
+      <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5"
+           aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+      </div>
+      <div class="bg-secondary rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[85%]">
+        <p class="text-sm text-slate-700 leading-relaxed">
+          ¡Hola! 👋 Soy el asistente virtual de <strong>FisioFelix</strong>.
+          ¿En qué puedo ayudarte hoy?
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="p-3.5 border-t border-sky-100 flex-shrink-0">
+    <form id="chat-form" class="flex gap-2" novalidate>
+      <input
+        id="chat-input"
+        type="text"
+        placeholder="Escribe tu consulta…"
+        maxlength="500"
+        autocomplete="off"
+        aria-label="Mensaje para el asistente"
+        class="flex-1 bg-secondary border border-sky-100 rounded-2xl px-4 py-2.5 text-sm
+               text-slate-700 placeholder:text-slate-400
+               focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
+               transition-all duration-200"
+      />
+      <button
+        id="chat-send"
+        type="submit"
+        aria-label="Enviar mensaje"
+        class="w-10 h-10 rounded-2xl bg-primary hover:bg-primary-dark text-white
+               flex items-center justify-center flex-shrink-0
+               transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ── Variables de entorno ──────────────────────────────────────
+  const BACKEND: string = (import.meta as any).env?.PUBLIC_BACKEND_URL ?? '';
+
+  // ── Elementos del DOM ─────────────────────────────────────────
+  const toggleBtn  = document.getElementById('chat-toggle')    as HTMLButtonElement;
+  const panel      = document.getElementById('chat-panel')     as HTMLDivElement;
+  const minimizeBtn= document.getElementById('chat-minimize')  as HTMLButtonElement;
+  const messages   = document.getElementById('chat-messages')  as HTMLDivElement;
+  const form       = document.getElementById('chat-form')      as HTMLFormElement;
+  const input      = document.getElementById('chat-input')     as HTMLInputElement;
+  const sendBtn    = document.getElementById('chat-send')      as HTMLButtonElement;
+  const iconOpen   = document.getElementById('chat-icon-open') as Element;
+  const iconClose  = document.getElementById('chat-icon-close')as Element;
+
+  // ── Session ID ────────────────────────────────────────────────
+  let sessionId = sessionStorage.getItem('fisiofelix_chat_session');
+  if (!sessionId) {
+    sessionId = 'web-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
+    sessionStorage.setItem('fisiofelix_chat_session', sessionId);
+  }
+
+  // ── Estado ────────────────────────────────────────────────────
+  let isOpen = false;
+
+  function openChat() {
+    isOpen = true;
+    panel.classList.remove('scale-90', 'opacity-0', 'pointer-events-none');
+    panel.classList.add('scale-100', 'opacity-100');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    iconOpen.classList.add('hidden');
+    iconClose.classList.remove('hidden');
+    setTimeout(() => input.focus(), 150);
+  }
+
+  function closeChat() {
+    isOpen = false;
+    panel.classList.add('scale-90', 'opacity-0', 'pointer-events-none');
+    panel.classList.remove('scale-100', 'opacity-100');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    iconOpen.classList.remove('hidden');
+    iconClose.classList.add('hidden');
+  }
+
+  toggleBtn.addEventListener('click', () => isOpen ? closeChat() : openChat());
+  minimizeBtn.addEventListener('click', closeChat);
+
+  // Cerrar con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) closeChat();
+  });
+
+  // ── Helpers de mensajes ───────────────────────────────────────
+  function scrollToBottom() {
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function appendMessage(text: string, role: 'bot' | 'user') {
+    const wrap = document.createElement('div');
+
+    if (role === 'user') {
+      wrap.className = 'flex items-start gap-2.5 justify-end';
+      wrap.innerHTML = `
+        <div class="bg-primary rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%]">
+          <p class="text-sm text-white leading-relaxed">${escapeHtml(text)}</p>
+        </div>`;
+    } else {
+      wrap.className = 'flex items-start gap-2.5';
+      wrap.innerHTML = `
+        <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+        </div>
+        <div class="bg-secondary rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[85%]">
+          <p class="text-sm text-slate-700 leading-relaxed">${escapeHtml(text)}</p>
+        </div>`;
+    }
+
+    messages.appendChild(wrap);
+    scrollToBottom();
+  }
+
+  function appendTyping() {
+    const wrap = document.createElement('div');
+    wrap.id = 'typing-indicator';
+    wrap.className = 'flex items-start gap-2.5';
+    wrap.innerHTML = `
+      <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5" aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+      </div>
+      <div class="bg-secondary rounded-2xl rounded-tl-sm px-4 py-3 flex gap-1" aria-label="El asistente está escribiendo">
+        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay:0ms"></span>
+        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay:150ms"></span>
+        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay:300ms"></span>
+      </div>`;
+    messages.appendChild(wrap);
+    scrollToBottom();
+  }
+
+  function removeTyping() {
+    document.getElementById('typing-indicator')?.remove();
+  }
+
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/\n/g, '<br/>');
+  }
+
+  // ── Envío de mensajes ─────────────────────────────────────────
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+
+    appendMessage(text, 'user');
+    input.value = '';
+    sendBtn.disabled = true;
+    appendTyping();
+
+    try {
+      const res = await fetch(`${BACKEND}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId, message: text }),
+      });
+      removeTyping();
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json() as { reply: string };
+      appendMessage(data.reply, 'bot');
+    } catch (err) {
+      removeTyping();
+      appendMessage(
+        'Lo siento, ha ocurrido un error. Por favor escríbenos por WhatsApp al +34 617 62 70 16.',
+        'bot'
+      );
+      console.error('[ChatWidget]', err);
+    } finally {
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  });
+</script>

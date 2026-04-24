@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Pago confirmado — FisioFelix"
+  description="Tu reserva en FisioFelix ha sido confirmada. Nos pondremos en contacto contigo en breve."
+>
+  <div class="min-h-screen bg-surface flex items-center justify-center px-4 py-16">
+    <div class="bg-white rounded-3xl shadow-hover p-10 max-w-md w-full text-center">
+
+      <!-- Icono éxito -->
+      <div class="w-20 h-20 rounded-full bg-emerald-50 flex items-center justify-center mx-auto mb-6">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none"
+             stroke="#10B981" stroke-width="2.5" stroke-linecap="round"
+             stroke-linejoin="round" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <!-- Textos -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
+                  bg-emerald-50 text-emerald-600 text-sm font-semibold mb-4">
+        Reserva confirmada
+      </div>
+      <h1 class="font-heading text-2xl font-bold text-brand mb-3">
+        ¡Pago completado!
+      </h1>
+      <p class="text-slate-500 leading-relaxed mb-8">
+        Hemos recibido tu reserva correctamente. Felix se pondrá en contacto contigo
+        en breve para confirmar la fecha y hora de tu sesión.
+      </p>
+
+      <!-- Info contacto -->
+      <div class="bg-sky-50 rounded-2xl p-4 mb-8 text-sm text-slate-600">
+        <p>¿Tienes alguna duda? Escríbenos:</p>
+        <a href="tel:+34617627016"
+           class="font-semibold text-primary hover:underline block mt-1">
+          +34 617 62 70 16
+        </a>
+      </div>
+
+      <!-- CTA volver -->
+      <a
+        href="/"
+        class="inline-flex items-center justify-center gap-2 px-7 py-3.5
+               bg-primary hover:bg-primary-dark text-white font-semibold
+               rounded-2xl shadow-soft hover:shadow-card transition-all duration-300
+               hover:-translate-y-0.5"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Volver al inicio
+      </a>
+    </div>
+  </div>
+</Layout>

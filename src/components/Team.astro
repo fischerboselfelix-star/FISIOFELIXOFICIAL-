@@ -1,0 +1,124 @@
+---
+const member = {
+  name:    'Felix Maximo Fischer',
+  role:    'Fisioterapeuta & Director Clínico',
+  specialty: 'Fisioterapia deportiva · Osteopatía',
+  years:   6,
+  image:   'https://images.unsplash.com/photo-1746813628081-0c8c1611aace?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwyfHxwaHlzaW90aGVyYXBpc3QlMjBwb3J0cmFpdCUyMHNtaWxpbmd8ZW58MHx8fHwxNzc2ODg4MjM1fDA&ixlib=rb-4.1.0&q=85',
+  certifications: [
+    'Grado en Fisioterapia · Universitat de València',
+    'Máster en Fisioterapia Deportiva',
+    'Especialización en Osteopatía Estructural',
+    'Certificado en Pilates Clínico',
+  ],
+  bio: 'Con más de 6 años de experiencia clínica, Felix combina las técnicas más avanzadas de fisioterapia con un trato cercano y empático. Su pasión por el deporte y la biomecánica le permite ofrecer tratamientos precisos y resultados reales.',
+};
+---
+
+<section id="equipo" class="py-20 md:py-28 bg-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Encabezado -->
+    <div class="text-center mb-16 reveal">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
+                  bg-sky-100 text-primary text-sm font-semibold mb-4">
+        El equipo
+      </div>
+      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-brand mb-4">
+        Tu fisioterapeuta de confianza
+      </h2>
+      <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+        Formación de alto nivel y vocación real por la salud de cada paciente.
+      </p>
+    </div>
+
+    <!-- Card del profesional -->
+    <div class="max-w-4xl mx-auto reveal">
+      <div class="group bg-white rounded-3xl shadow-soft hover:shadow-hover
+                  transition-all duration-300 overflow-hidden
+                  grid md:grid-cols-2">
+
+        <!-- Foto -->
+        <div class="relative overflow-hidden h-72 md:h-auto" style="min-height: 360px;">
+          <img
+            src={member.image}
+            alt={`${member.name}, fisioterapeuta y director clínico de FisioFelix en Denia`}
+            class="w-full h-full object-cover object-top
+                   group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+            width="480"
+            height="600"
+          />
+          <!-- Overlay -->
+          <div
+            class="absolute inset-0 pointer-events-none"
+            style="background: linear-gradient(to top, rgba(30,41,59,0.30), transparent 60%);"
+            aria-hidden="true"
+          ></div>
+
+          <!-- Badge años -->
+          <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm
+                      rounded-2xl px-4 py-2.5 shadow-card">
+            <span class="font-heading font-bold text-primary text-xl">{member.years}+</span>
+            <span class="text-xs text-slate-500 block leading-tight">años de experiencia</span>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="p-8 md:p-10 flex flex-col justify-center">
+          <div class="mb-1">
+            <span class="text-xs font-semibold text-primary uppercase tracking-widest">
+              {member.specialty}
+            </span>
+          </div>
+
+          <h3 class="font-heading text-2xl md:text-3xl font-bold text-brand mb-1 tracking-tight">
+            {member.name}
+          </h3>
+          <p class="text-slate-500 text-sm mb-4">{member.role}</p>
+
+          <p class="text-sm text-slate-600 leading-relaxed mb-6 border-l-2 border-sky-200 pl-4 italic">
+            {member.bio}
+          </p>
+
+          <!-- Formación -->
+          <ul class="space-y-2.5 mb-8" aria-label="Formación y certificaciones">
+            {member.certifications.map(cert => (
+              <li class="flex items-start gap-3">
+                <div class="w-5 h-5 rounded-full bg-accent/10 flex items-center justify-center
+                            flex-shrink-0 mt-0.5">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
+                       stroke="#10B981" stroke-width="3" stroke-linecap="round"
+                       stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+                <span class="text-sm text-slate-600 leading-snug">{cert}</span>
+              </li>
+            ))}
+          </ul>
+
+          <!-- CTA -->
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a
+              href="#reservar"
+              class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3
+                     bg-primary hover:bg-primary-dark text-white font-semibold text-sm
+                     rounded-2xl shadow-soft hover:shadow-card transition-all duration-300"
+            >
+              Reservar consulta
+            </a>
+            <a
+              href="mailto:fischerboselfelix@gmail.com"
+              class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3
+                     border-2 border-sky-200 text-primary font-semibold text-sm
+                     rounded-2xl hover:bg-sky-50 transition-all duration-300"
+            >
+              Contactar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
