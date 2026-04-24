@@ -1,43 +1,31 @@
 ---
-/**
- * CONFIGURACIÓN DE AGENDA
- * ─────────────────────────────────────────────────────────────────
- * Google Calendar Appointments:
- *   calendarUrl = "https://calendar.google.com/calendar/appointments/schedules/XXXXXXXX?gv=true"
- *
- * Microsoft Bookings:
- *   bookingsUrl = "https://outlook.office365.com/owa/calendar/TU_CLINICA@dominio.com/bookings/"
- *
- * Deja en "" la que no uses. Si ambas tienen valor se mostrará
- * un selector de proveedor automáticamente.
- * ─────────────────────────────────────────────────────────────────
- */
+---
 const calendarUrl = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2BC7qlQaZiNfqdneIL574ngJwCj-7QaMPyc4EKyiU_s1xRqxFQX1pomi-LGXj5RzcJS-vkf5OQ?gv=true";
-const bookingsUrl = "";  // 
+const bookingsUrl = "";
 
 const whatsappNum = "34617627016";
 const whatsappMsg = encodeURIComponent("Hola! Me gustaría reservar una cita en FisioFelix.");
 
 const pricing = [
   {
-    id:    'short',
-    label: 'Sesión 30 min',
-    price: '25€',
-    desc:  'Revisión y tratamiento focalizado.',
+    id:      'short',
+    label:   'Sesión 30 min',
+    price:   '25€',
+    desc:    'Revisión y tratamiento focalizado.',
     popular: false,
   },
   {
-    id:    'long',
-    label: 'Sesión 1 hora',
-    price: '45€',
-    desc:  'Valoración completa + tratamiento.',
+    id:      'long',
+    label:   'Sesión 1 hora',
+    price:   '45€',
+    desc:    'Valoración completa + tratamiento.',
     popular: true,
   },
   {
-    id:    'bono',
-    label: 'Bono anual · 24 sesiones',
-    price: '972€',
-    desc:  '2 sesiones/mes · 12 meses · 10% dto.',
+    id:      'bono',
+    label:   'Bono anual · 24 sesiones',
+    price:   '972€',
+    desc:    '2 sesiones/mes · 12 meses · 10% dto.',
     popular: false,
   },
 ];
@@ -83,7 +71,8 @@ const hasBoth     = hasCalendar && hasBookings;
 
         <!-- Selector proveedor (solo si los dos están configurados) -->
         {hasBoth && (
-          <div class="flex gap-3" id="calendar-tabs" role="tablist" aria-label="Seleccionar proveedor de calendario">
+          <div class="flex gap-3" id="calendar-tabs" role="tablist"
+               aria-label="Seleccionar proveedor de calendario">
             <button
               id="tab-google"
               role="tab"
@@ -111,41 +100,57 @@ const hasBoth     = hasCalendar && hasBookings;
           </div>
         )}
 
-        <!-- Google Calendar iframe -->
+        <!-- ✅ Google Calendar iframe CORREGIDO -->
         {hasCalendar && (
           <div id="frame-google" role="tabpanel" class="calendar-frame">
             <div class="rounded-3xl overflow-hidden border border-sky-100 shadow-soft bg-white">
               <iframe
                 src={calendarUrl}
                 width="100%"
-                height="480"
+                height="600"
                 frameborder="0"
-                title="Agenda de citas — Google Calendar"
+                scrolling="yes"
+                title="Agenda de citas — Google Calendar FisioFelix"
                 loading="lazy"
-                class="block"
+                allow="camera; microphone; fullscreen"
+                style="border: none; border-radius: 1.5rem; display: block; min-height: 600px;"
               ></iframe>
             </div>
+            <!-- Enlace de respaldo por si el iframe bloquea -->
+            <p class="text-center text-xs text-slate-400 mt-3">
+              ¿No ves el calendario?
+              <a
+                href={calendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary font-semibold hover:underline ml-1"
+              >
+                Ábrelo aquí →
+              </a>
+            </p>
           </div>
         )}
 
         <!-- Microsoft Bookings iframe -->
         {hasBookings && (
-          <div id="frame-outlook" role="tabpanel" class={`calendar-frame${hasBoth ? ' hidden' : ''}`}>
+          <div id="frame-outlook" role="tabpanel"
+               class={`calendar-frame${hasBoth ? ' hidden' : ''}`}>
             <div class="rounded-3xl overflow-hidden border border-sky-100 shadow-soft bg-white">
               <iframe
                 src={bookingsUrl}
                 width="100%"
-                height="480"
+                height="600"
                 frameborder="0"
+                scrolling="yes"
                 title="Agenda de citas — Microsoft Bookings"
                 loading="lazy"
-                class="block"
+                style="border: none; border-radius: 1.5rem; display: block; min-height: 600px;"
               ></iframe>
             </div>
           </div>
         )}
 
-        <!-- Placeholder: ninguno configurado todavía -->
+        <!-- Placeholder: ninguno configurado -->
         {!hasCalendar && !hasBookings && (
           <div class="rounded-3xl border-2 border-dashed border-sky-200 bg-sky-50/50
                       flex flex-col items-center justify-center h-[380px] text-center p-8">
@@ -163,17 +168,6 @@ const hasBoth     = hasCalendar && hasBookings;
               Conecta <strong>Google Calendar</strong> o <strong>Microsoft Bookings</strong>
               para que tus pacientes reserven directamente desde aquí.
             </p>
-            <div class="flex flex-col sm:flex-row gap-2 text-xs text-slate-500">
-              <span class="px-3 py-1.5 bg-white rounded-full border border-sky-200 font-medium">
-                📅 Google Calendar Appointments
-              </span>
-              <span class="px-3 py-1.5 bg-white rounded-full border border-sky-200 font-medium">
-                📆 Microsoft Bookings
-              </span>
-            </div>
-            <p class="text-xs text-slate-400 mt-4">
-              Edita <code class="bg-white px-1.5 py-0.5 rounded text-primary font-mono">Booking.astro</code> y pega tu URL.
-            </p>
           </div>
         )}
 
@@ -188,8 +182,19 @@ const hasBoth     = hasCalendar && hasBookings;
         >
           <div class="w-10 h-10 rounded-xl bg-whatsapp flex items-center justify-center flex-shrink-0">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.845L.057 23.928l6.286-1.648A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.368l-.359-.213-3.728.977.994-3.636-.234-.374A9.818 9.818 0 1112 21.818z"/>
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15
+                       -.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463
+                       -2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606
+                       .134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371
+                       -.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51
+                       -.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016
+                       -1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487
+                       .709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758
+                       -.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.845L.057 23.928l6.286
+                       -1.648A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0
+                       21.818a9.818 9.818 0 01-5.002-1.368l-.359-.213-3.728.977.994-3.636-.234
+                       -.374A9.818 9.818 0 1112 21.818z"/>
             </svg>
           </div>
           <div class="flex-1 min-w-0">
@@ -198,7 +203,8 @@ const hasBoth     = hasCalendar && hasBookings;
           </div>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8"
                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-               class="flex-shrink-0 group-hover:translate-x-0.5 transition-transform" aria-hidden="true">
+               class="flex-shrink-0 group-hover:translate-x-0.5 transition-transform"
+               aria-hidden="true">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </a>
@@ -253,8 +259,9 @@ const hasBoth     = hasCalendar && hasBookings;
                        transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label={`Pagar ${tier.label} — ${tier.price}`}
               >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
                   <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
                   <line x1="1" y1="10" x2="23" y2="10"/>
                 </svg>
@@ -264,7 +271,7 @@ const hasBoth     = hasCalendar && hasBookings;
           ))}
         </div>
 
-        <!-- Sello de seguridad -->
+        <!-- Sellos de seguridad -->
         <div class="flex items-center justify-center gap-6 pt-2">
           <div class="flex items-center gap-1.5 text-xs text-slate-400">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -284,9 +291,10 @@ const hasBoth     = hasCalendar && hasBookings;
         </div>
 
         <!-- Info adicional -->
-        <div class="p-4 bg-sky-50/60 rounded-2xl border border-sky-100 text-sm text-slate-500 leading-relaxed">
-          <strong class="text-brand">¿Primera vez?</strong> Puedes reservar directamente por WhatsApp
-          o usando el calendario. El pago puede realizarse también en clínica.
+        <div class="p-4 bg-sky-50/60 rounded-2xl border border-sky-100
+                    text-sm text-slate-500 leading-relaxed">
+          <strong class="text-brand">¿Primera vez?</strong> Puedes reservar directamente
+          por WhatsApp o usando el calendario. El pago puede realizarse también en clínica.
         </div>
       </div>
     </div>
@@ -294,7 +302,7 @@ const hasBoth     = hasCalendar && hasBookings;
 </section>
 
 <script>
-  // ── Tabs Google / Microsoft ──────────────────────────────────
+  // ── Tabs Google / Microsoft ───────────────────────────────────
   const tabBtns = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
   const frames  = document.querySelectorAll<HTMLElement>('.calendar-frame');
 
@@ -304,39 +312,53 @@ const hasBoth     = hasCalendar && hasBookings;
       tabBtns.forEach(b => {
         const active = b.dataset.target === target;
         b.setAttribute('aria-selected', String(active));
-        b.classList.toggle('bg-primary',      active);
-        b.classList.toggle('text-white',       active);
-        b.classList.toggle('border-primary',   active);
-        b.classList.toggle('text-slate-500',  !active);
-        b.classList.toggle('border-slate-200',!active);
+        b.classList.toggle('bg-primary',       active);
+        b.classList.toggle('text-white',        active);
+        b.classList.toggle('border-primary',    active);
+        b.classList.toggle('text-slate-500',   !active);
+        b.classList.toggle('border-slate-200', !active);
       });
       frames.forEach(f => f.classList.toggle('hidden', f.id !== target));
     });
   });
 
-  // ── Botones de pago → Stripe ─────────────────────────────────
+  // ── Detección de iframe bloqueado ────────────────────────────
+  // Google Calendar a veces bloquea iframes en dominios no verificados.
+  // Si el iframe no carga en 5s mostramos el enlace de respaldo.
+  const calIframe = document.querySelector<HTMLIFrameElement>('#frame-google iframe');
+  const fallback  = document.querySelector<HTMLParagraphElement>('#frame-google p');
+
+  if (calIframe && fallback) {
+    let loaded = false;
+    calIframe.addEventListener('load', () => { loaded = true; });
+    setTimeout(() => {
+      if (!loaded) fallback.classList.remove('hidden');
+    }, 5000);
+  }
+
+  // ── Botones de pago → Stripe ──────────────────────────────────
   const BACKEND = (import.meta as any).env?.PUBLIC_BACKEND_URL ?? '';
 
   document.querySelectorAll<HTMLButtonElement>('.pay-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
-      const tier = btn.dataset.tier!;
+      const tier     = btn.dataset.tier!;
       const original = btn.innerHTML;
 
       btn.textContent = 'Redirigiendo…';
-      btn.disabled = true;
+      btn.disabled    = true;
 
       try {
         const res = await fetch(`${BACKEND}/api/checkout/session`, {
-          method: 'POST',
+          method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tier, origin_url: window.location.origin }),
+          body:    JSON.stringify({ tier, origin_url: window.location.origin }),
         });
-        if (!res.ok) throw new Error('Error del servidor');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const { url } = await res.json() as { url: string };
         window.location.href = url;
       } catch (err) {
         btn.innerHTML = original;
-        btn.disabled = false;
+        btn.disabled  = false;
         btn.classList.add('!border-red-300', '!text-red-500', '!bg-red-50');
         btn.textContent = '⚠ Error. Inténtalo de nuevo';
         setTimeout(() => {
