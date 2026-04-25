@@ -1,93 +1,431 @@
-cat > src/components/Booking.astro << 'ENDOFFILE'
 ---
 const calendarUrl = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2BC7qlQaZiNfqdneIL574ngJwCj-7QaMPyc4EKyiU_s1xRqxFQX1pomi-LGXj5RzcJS-vkf5OQ?gv=true";
 const bookingsUrl = "";
+
 const whatsappNum = "34617627016";
 const whatsappMsg = encodeURIComponent("Hola! Me gustaría reservar una cita en FisioFelix.");
+
 const pricing = [
-  { id: 'short', label: 'Sesión 30 min',           price: '25€',  desc: 'Revisión y tratamiento focalizado.',    popular: false },
-  { id: 'long',  label: 'Sesión 1 hora',            price: '45€',  desc: 'Valoración completa + tratamiento.',   popular: true  },
-  { id: 'bono',  label: 'Bono anual · 24 sesiones', price: '972€', desc: '2 sesiones/mes · 12 meses · 10% dto.', popular: false },
+  {
+    id:      'short',
+    label:   'Sesión 30 min',
+    price:   '25€',
+    desc:    'Revisión y tratamiento focalizado.',
+    popular: false,
+  },
+  {
+    id:      'long',
+    label:   'Sesión 1 hora',
+    price:   '45€',
+    desc:    'Valoración completa + tratamiento.',
+    popular: true,
+  },
+  {
+    id:      'bono',
+    label:   'Bono anual · 24 sesiones',
+    price:   '972€',
+    desc:    '2 sesiones/mes · 12 meses · 10% dto.',
+    popular: false,
+  },
 ];
+
 const hasCalendar = calendarUrl.length > 0;
 const hasBookings = bookingsUrl.length > 0;
-const hasBoth = hasCalendar && hasBookings;
+const hasBoth     = hasCalendar && hasBookings;
 ---
 
 <section id="reservar" class="py-20 md:py-28 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Encabezado -->
     <div class="text-center mb-16 reveal">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-100 text-primary text-sm font-semibold mb-4">Reserva online</div>
-      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-brand mb-4">Agenda tu consulta</h2>
-      <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">Elige el servicio que necesitas y reserva tu cita en segundos, sin esperas.</p>
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
+                  bg-sky-100 text-primary text-sm font-semibold mb-4">
+        Reserva online
+      </div>
+      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-brand mb-4">
+        Agenda tu consulta
+      </h2>
+      <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+        Elige el servicio que necesitas y reserva tu cita en segundos, sin esperas.
+      </p>
     </div>
+
     <div class="grid lg:grid-cols-2 gap-10 items-start">
+
+      <!-- ══════════════════════════════════════
+           COLUMNA IZQUIERDA — Calendario
+      ══════════════════════════════════════ -->
       <div class="space-y-6 reveal">
         <h3 class="font-heading text-xl font-semibold text-brand flex items-center gap-2">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8"  y1="2" x2="8"  y2="6"/>
+            <line x1="3"  y1="10" x2="21" y2="10"/>
+          </svg>
           Selecciona tu horario
         </h3>
 
-        {hasCalendar && (
-          <div class="rounded-3xl border border-sky-100 shadow-soft bg-gradient-to-br from-sky-50 to-white p-8 text-center">
-            <div class="w-20 h-20 rounded-2xl bg-white shadow-card flex items-center justify-center mx-auto mb-5">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
-              </svg>
-            </div>
-            <h4 class="font-heading font-bold text-xl text-brand mb-2">Reserva tu cita online</h4>
-            <p class="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs mx-auto">Elige el día y la hora que mejor te venga. El proceso tarda menos de 2 minutos.</p>
-            <div class="grid grid-cols-3 gap-3 mb-7">
-              <div class="bg-white rounded-2xl p-3 shadow-soft"><div class="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center mx-auto mb-1.5">1</div><p class="text-xs text-slate-500">Elige día y hora</p></div>
-              <div class="bg-white rounded-2xl p-3 shadow-soft"><div class="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center mx-auto mb-1.5">2</div><p class="text-xs text-slate-500">Añade tus datos</p></div>
-              <div class="bg-white rounded-2xl p-3 shadow-soft"><div class="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center mx-auto mb-1.5">3</div><p class="text-xs text-slate-500">¡Listo!</p></div>
-            </div>
-            <a href={calendarUrl} target="_blank" rel="noopener noreferrer"
-              class="inline-flex items-center justify-center gap-2.5 w-full px-6 py-4 bg-primary hover:bg-primary-dark text-white font-semibold text-base rounded-2xl shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition-all duration-300">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Abrir calendario y reservar
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <p class="text-xs text-slate-400 mt-3">Se abre de forma segura en Google Calendar</p>
+        <!-- Selector proveedor (solo si los dos están configurados) -->
+        {hasBoth && (
+          <div class="flex gap-3" id="calendar-tabs" role="tablist"
+               aria-label="Seleccionar proveedor de calendario">
+            <button
+              id="tab-google"
+              role="tab"
+              aria-selected="true"
+              aria-controls="frame-google"
+              data-target="frame-google"
+              class="tab-btn flex-1 py-2.5 px-4 rounded-2xl border-2
+                     border-primary bg-primary text-white text-sm font-semibold
+                     transition-all duration-200"
+            >
+              Google Calendar
+            </button>
+            <button
+              id="tab-outlook"
+              role="tab"
+              aria-selected="false"
+              aria-controls="frame-outlook"
+              data-target="frame-outlook"
+              class="tab-btn flex-1 py-2.5 px-4 rounded-2xl border-2
+                     border-slate-200 text-slate-500 text-sm font-semibold
+                     transition-all duration-200 hover:border-primary hover:text-primary"
+            >
+              Microsoft Bookings
+            </button>
           </div>
         )}
 
-        <a href={`https://wa.me/${whatsappNum}?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer"
-          class="flex items-center gap-3 p-4 rounded-2xl bg-green-50 border border-green-100 hover:bg-green-100 transition-colors duration-200 group">
+        <!-- ✅ Google Calendar — tarjeta + botón (funciona siempre) -->
+        {hasCalendar && (
+          <div id="frame-google" class="calendar-frame">
+
+            <!-- Tarjeta visual del calendario -->
+            <div class="rounded-3xl border border-sky-100 shadow-soft bg-gradient-to-br
+                        from-sky-50 to-white p-8 text-center">
+
+              <!-- Icono grande -->
+              <div class="w-20 h-20 rounded-2xl bg-white shadow-card flex items-center
+                          justify-center mx-auto mb-5">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"
+                     stroke="#0EA5E9" stroke-width="1.6" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8"  y1="2" x2="8"  y2="6"/>
+                  <line x1="3"  y1="10" x2="21" y2="10"/>
+                  <line x1="8"  y1="14" x2="8"  y2="14" stroke-width="2.5"/>
+                  <line x1="12" y1="14" x2="12" y2="14" stroke-width="2.5"/>
+                  <line x1="16" y1="14" x2="16" y2="14" stroke-width="2.5"/>
+                  <line x1="8"  y1="18" x2="8"  y2="18" stroke-width="2.5"/>
+                  <line x1="12" y1="18" x2="12" y2="18" stroke-width="2.5"/>
+                </svg>
+              </div>
+
+              <h4 class="font-heading font-bold text-xl text-brand mb-2">
+                Reserva tu cita online
+              </h4>
+              <p class="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs mx-auto">
+                Elige el día y la hora que mejor te venga. El proceso tarda menos de 2 minutos.
+              </p>
+
+              <!-- Pasos rápidos -->
+              <div class="grid grid-cols-3 gap-3 mb-7">
+                {[
+                  { num: '1', text: 'Elige día y hora' },
+                  { num: '2', text: 'Añade tus datos' },
+                  { num: '3', text: '¡Listo!' },
+                ].map(step => (
+                  <div class="bg-white rounded-2xl p-3 shadow-soft">
+                    <div class="w-7 h-7 rounded-full bg-primary text-white text-xs
+                                font-bold flex items-center justify-center mx-auto mb-1.5">
+                      {step.num}
+                    </div>
+                    <p class="text-xs text-slate-500 leading-tight">{step.text}</p>
+                  </div>
+                ))}
+              </div>
+
+              <!-- Botón principal — abre Google Calendar en nueva pestaña -->
+              <a
+                href={calendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2.5 w-full
+                       px-6 py-4 bg-primary hover:bg-primary-dark text-white
+                       font-semibold text-base rounded-2xl shadow-soft
+                       hover:shadow-hover hover:-translate-y-0.5
+                       transition-all duration-300"
+                aria-label="Abrir Google Calendar para reservar cita en FisioFelix"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                     stroke="white" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8"  y1="2" x2="8"  y2="6"/>
+                  <line x1="3"  y1="10" x2="21" y2="10"/>
+                </svg>
+                Abrir calendario y reservar
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="white" stroke-width="2.5" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+              </a>
+
+              <p class="text-xs text-slate-400 mt-3 flex items-center justify-center gap-1">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Se abre de forma segura en Google Calendar
+              </p>
+            </div>
+          </div>
+        )}
+
+        <!-- Microsoft Bookings iframe -->
+        {hasBookings && (
+          <div id="frame-outlook" role="tabpanel"
+               class={`calendar-frame${hasBoth ? ' hidden' : ''}`}>
+            <div class="rounded-3xl overflow-hidden border border-sky-100 shadow-soft bg-white">
+              <iframe
+                src={bookingsUrl}
+                width="100%"
+                height="600"
+                frameborder="0"
+                scrolling="yes"
+                title="Agenda de citas — Microsoft Bookings"
+                loading="lazy"
+                style="border: none; border-radius: 1.5rem; display: block; min-height: 600px;"
+              ></iframe>
+            </div>
+          </div>
+        )}
+
+        <!-- Placeholder: ninguno configurado -->
+        {!hasCalendar && !hasBookings && (
+          <div class="rounded-3xl border-2 border-dashed border-sky-200 bg-sky-50/50
+                      flex flex-col items-center justify-center h-[380px] text-center p-8">
+            <div class="w-16 h-16 rounded-2xl bg-sky-100 flex items-center justify-center mb-4">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8"  y1="2" x2="8"  y2="6"/>
+                <line x1="3"  y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <p class="font-heading font-semibold text-brand mb-1">Calendario de citas</p>
+            <p class="text-sm text-slate-400 mb-5 max-w-xs">
+              Conecta <strong>Google Calendar</strong> o <strong>Microsoft Bookings</strong>
+              para que tus pacientes reserven directamente desde aquí.
+            </p>
+          </div>
+        )}
+
+        <!-- Botón alternativo WhatsApp -->
+        <a
+          href={`https://wa.me/${whatsappNum}?text=${whatsappMsg}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-3 p-4 rounded-2xl bg-green-50 border border-green-100
+                 hover:bg-green-100 transition-colors duration-200 group"
+          aria-label="Reservar por WhatsApp"
+        >
           <div class="w-10 h-10 rounded-xl bg-whatsapp flex items-center justify-center flex-shrink-0">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.845L.057 23.928l6.286-1.648A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.368l-.359-.213-3.728.977.994-3.636-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15
+                       -.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463
+                       -2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606
+                       .134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371
+                       -.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51
+                       -.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016
+                       -1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487
+                       .709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758
+                       -.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.845L.057 23.928l6.286
+                       -1.648A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0
+                       21.818a9.818 9.818 0 01-5.002-1.368l-.359-.213-3.728.977.994-3.636-.234
+                       -.374A9.818 9.818 0 1112 21.818z"/>
+            </svg>
           </div>
           <div class="flex-1 min-w-0">
             <p class="text-sm font-semibold text-slate-700">¿Prefieres WhatsApp?</p>
-            <p class="text-xs text-slate-400">Escríbenos y te respondemos enseguida</p>
+            <p class="text-xs text-slate-400 truncate">Escríbenos y te respondemos enseguida</p>
           </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="flex-shrink-0 group-hover:translate-x-0.5 transition-transform"
+               aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
         </a>
       </div>
 
+      <!-- ══════════════════════════════════════
+           COLUMNA DERECHA — Tarifas + Pago
+      ══════════════════════════════════════ -->
       <div class="space-y-6 reveal">
         <h3 class="font-heading text-xl font-semibold text-brand flex items-center gap-2">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
           Nuestras tarifas
         </h3>
+
+        <!-- Tarjetas de precio -->
         <div class="space-y-4">
           {pricing.map((tier) => (
-            <div class={`relative p-5 rounded-2xl border-2 transition-all duration-200 ${tier.popular ? 'border-primary bg-gradient-to-br from-sky-50 to-white shadow-card' : 'border-slate-100 bg-white hover:border-sky-200 shadow-soft hover:shadow-card'}`}>
-              {tier.popular && (<span class="absolute -top-3 left-5 px-3 py-0.5 bg-primary text-white text-xs font-semibold rounded-full shadow-sm">Más popular</span>)}
+            <div
+              class={`relative p-5 rounded-2xl border-2 transition-all duration-200
+                ${tier.popular
+                  ? 'border-primary bg-gradient-to-br from-sky-50 to-white shadow-card'
+                  : 'border-slate-100 bg-white hover:border-sky-200 shadow-soft hover:shadow-card'
+                }`}
+            >
+              {tier.popular && (
+                <span class="absolute -top-3 left-5 px-3 py-0.5 bg-primary text-white
+                             text-xs font-semibold rounded-full shadow-sm">
+                  Más popular
+                </span>
+              )}
               <div class="flex items-center justify-between gap-4">
                 <div class="min-w-0">
-                  <p class="font-heading font-semibold text-brand text-base leading-tight">{tier.label}</p>
+                  <p class="font-heading font-semibold text-brand text-base leading-tight">
+                    {tier.label}
+                  </p>
                   <p class="text-sm text-slate-400 mt-0.5">{tier.desc}</p>
                 </div>
-                <span class="font-heading font-bold text-2xl text-primary flex-shrink-0">{tier.price}</span>
+                <span class="font-heading font-bold text-2xl text-primary flex-shrink-0">
+                  {tier.price}
+                </span>
               </div>
-              <button type="button" data-tier={tier.id}
-                class="pay-btn mt-4 w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all duration-200 disabled:opacity-50">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              <button
+                type="button"
+                data-tier={tier.id}
+                class="pay-btn mt-4 w-full inline-flex items-center justify-center gap-2
+                       py-2.5 px-4 rounded-xl text-sm font-semibold
+                       bg-primary/10 text-primary hover:bg-primary hover:text-white
+                       transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label={`Pagar ${tier.label} — ${tier.price}`}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                  <line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
                 Pagar ahora
               </button>
             </div>
           ))}
         </div>
+
+        <!-- Sellos de seguridad -->
+        <div class="flex items-center justify-center gap-6 pt-2">
+          <div class="flex items-center gap-1.5 text-xs text-slate-400">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0110 0v4"/>
+            </svg>
+            Pago seguro · Stripe
+          </div>
+          <div class="flex items-center gap-1.5 text-xs text-slate-400">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            SSL encriptado
+          </div>
+        </div>
+
+        <!-- Info adicional -->
+        <div class="p-4 bg-sky-50/60 rounded-2xl border border-sky-100
+                    text-sm text-slate-500 leading-relaxed">
+          <strong class="text-brand">¿Primera vez?</strong> Puedes reservar directamente
+          por WhatsApp o usando el calendario. El pago puede realizarse también en clínica.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ── Tabs Google / Microsoft ───────────────────────────────────
+  const tabBtns = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const frames  = document.querySelectorAll<HTMLElement>('.calendar-frame');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target!;
+      tabBtns.forEach(b => {
+        const active = b.dataset.target === target;
+        b.setAttribute('aria-selected', String(active));
+        b.classList.toggle('bg-primary',       active);
+        b.classList.toggle('text-white',        active);
+        b.classList.toggle('border-primary',    active);
+        b.classList.toggle('text-slate-500',   !active);
+        b.classList.toggle('border-slate-200', !active);
+      });
+      frames.forEach(f => f.classList.toggle('hidden', f.id !== target));
+    });
+  });
+
+  // ── Detección de iframe bloqueado ────────────────────────────
+  // Google Calendar a veces bloquea iframes en dominios no verificados.
+  // Si el iframe no carga en 5s mostramos el enlace de respaldo.
+  const calIframe = document.querySelector<HTMLIFrameElement>('#frame-google iframe');
+  const fallback  = document.querySelector<HTMLParagraphElement>('#frame-google p');
+
+  if (calIframe && fallback) {
+    let loaded = false;
+    calIframe.addEventListener('load', () => { loaded = true; });
+    setTimeout(() => {
+      if (!loaded) fallback.classList.remove('hidden');
+    }, 5000);
+  }
+
+  // ── Botones de pago → Stripe ──────────────────────────────────
+  const BACKEND = (import.meta as any).env?.PUBLIC_BACKEND_URL ?? '';
+
+  document.querySelectorAll<HTMLButtonElement>('.pay-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const tier     = btn.dataset.tier!;
+      const original = btn.innerHTML;
+
+      btn.textContent = 'Redirigiendo…';
+      btn.disabled    = true;
+
+      try {
+        const res = await fetch(`${BACKEND}/api/checkout/session`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ tier, origin_url: window.location.origin }),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const { url } = await res.json() as { url: string };
+        window.location.href = url;
+      } catch (err) {
+        btn.innerHTML = original;
+        btn.disabled  = false;
+        btn.classList.add('!border-red-300', '!text-red-500', '!bg-red-50');
+        btn.textContent = '⚠ Error. Inténtalo de nuevo';
+        setTimeout(() => {
+          btn.innerHTML = original;
+          btn.classList.remove('!border-red-300', '!text-red-500', '!bg-red-50');
+        }, 3000);
+      }
+    });
+  });
+</script>
