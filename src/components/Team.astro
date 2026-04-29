@@ -1,4 +1,11 @@
 ---
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/utils';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
 const member = {
   name: 'Felix Maximo Fischer',
   role: 'Fisioterapeuta & Director Clínico',
@@ -9,21 +16,22 @@ const member = {
   bio: 'Con más de 6 años de experiencia clínica, Felix combina las técnicas más avanzadas de fisioterapia con un trato cercano y empático. Su pasión por el deporte y la biomecánica le permite ofrecer tratamientos precisos y resultados reales.',
 };
 ---
+
 <section id="equipo" class="py-20 md:py-28 bg-surface">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16 reveal">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-100 text-primary text-sm font-semibold mb-4">El equipo</div>
-      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-brand mb-4">Tu fisioterapeuta de confianza</h2>
-      <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">Formación de alto nivel y vocación real por la salud de cada paciente.</p>
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-100 text-primary text-sm font-semibold mb-4">{t('team.badge')}</div>
+      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-brand mb-4">{t('team.h2')}</h2>
+      <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">{t('team.desc')}</p>
     </div>
     <div class="max-w-4xl mx-auto reveal">
       <div class="group bg-white rounded-3xl shadow-soft hover:shadow-hover transition-all duration-300 overflow-hidden grid md:grid-cols-2">
         <div class="relative overflow-hidden h-72 md:h-auto" style="min-height: 360px;">
-          <img src={member.image} alt="Felix Maximo Fischer fisioterapeuta Denia" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" loading="lazy" width="480" height="600" />
+          <img src={member.image} alt="Felix Maximo Fischer fisioterapeuta Denia" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" loading="lazy" width="480" height="600"/>
           <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to top, rgba(30,41,59,0.30), transparent 60%);" aria-hidden="true"></div>
           <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-2.5 shadow-card">
             <span class="font-heading font-bold text-primary text-xl">{member.years}+</span>
-            <span class="text-xs text-slate-500 block leading-tight">años de experiencia</span>
+            <span class="text-xs text-slate-500 block leading-tight">{t('team.years')}</span>
           </div>
         </div>
         <div class="p-8 md:p-10 flex flex-col justify-center">
@@ -42,8 +50,8 @@ const member = {
             ))}
           </ul>
           <div class="flex flex-col sm:flex-row gap-3">
-            <a href="#reservar" class="flex-1 inline-flex items-center justify-center px-5 py-3 bg-primary hover:bg-primary-dark text-white font-semibold text-sm rounded-2xl transition-all duration-300">Reservar consulta</a>
-            <a href="mailto:fischerboselfelix@gmail.com" class="flex-1 inline-flex items-center justify-center px-5 py-3 border-2 border-sky-200 text-primary font-semibold text-sm rounded-2xl hover:bg-sky-50 transition-all duration-300">Contactar</a>
+            <a href="#reservar" class="flex-1 inline-flex items-center justify-center px-5 py-3 bg-primary hover:bg-primary-dark text-white font-semibold text-sm rounded-2xl transition-all duration-300">{t('team.reservar')}</a>
+            <a href="mailto:fischerboselfelix@gmail.com" class="flex-1 inline-flex items-center justify-center px-5 py-3 border-2 border-sky-200 text-primary font-semibold text-sm rounded-2xl hover:bg-sky-50 transition-all duration-300">{t('team.contactar')}</a>
           </div>
         </div>
       </div>
