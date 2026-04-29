@@ -12,11 +12,4 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  vite: {
-    resolve: {
-      alias: {
-        '@i18n': '/src/i18n',
-      },
-    },
-  },
 });
