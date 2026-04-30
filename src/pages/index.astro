@@ -15,16 +15,7 @@ import WhatsAppButton from '../components/WhatsAppButton.astro';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
-<script>
-  const supported = ['en', 'de', 'fr', 'ru'];
-  const browserLang = navigator.language.split('-')[0].toLowerCase();
-  const alreadyRedirected = sessionStorage.getItem('lang-redirected');
-  
-  if (!alreadyRedirected && supported.includes(browserLang)) {
-    sessionStorage.setItem('lang-redirected', '1');
-    window.location.href = '/' + browserLang;
-  }
-</script>
+
 <Layout title={t('layout.title')} description={t('layout.description')}>
   <Header lang={lang} />
   <main id="main-content">
@@ -38,4 +29,13 @@ const t = useTranslations(lang);
   <Footer lang={lang} />
   <WhatsAppButton />
   <ChatWidget />
+  <script>
+    const supported = ['en', 'de', 'fr', 'ru'];
+    const browserLang = navigator.language.split('-')[0].toLowerCase();
+    const alreadyRedirected = sessionStorage.getItem('lang-redirected');
+    if (!alreadyRedirected && supported.includes(browserLang)) {
+      sessionStorage.setItem('lang-redirected', '1');
+      window.location.href = '/' + browserLang;
+    }
+  </script>
 </Layout>
