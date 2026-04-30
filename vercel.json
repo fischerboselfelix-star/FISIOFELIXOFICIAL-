@@ -3,6 +3,10 @@
   "outputDirectory": "dist",
   "framework": "astro",
   "rewrites": [
+    { "source": "/en", "destination": "/en/index.html" },
+    { "source": "/de", "destination": "/de/index.html" },
+    { "source": "/fr", "destination": "/fr/index.html" },
+    { "source": "/ru", "destination": "/ru/index.html" },
     { "source": "/(.*)", "destination": "/$1" }
   ]
 }
