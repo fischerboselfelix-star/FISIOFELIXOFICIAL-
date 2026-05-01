@@ -143,6 +143,12 @@
   const iconOpen    = document.getElementById('chat-icon-open') as Element;
   const iconClose   = document.getElementById('chat-icon-close') as Element;
 
+  const langMap: Record<string, string> = {
+    en: 'English', de: 'Deutsch', fr: 'Français', ru: 'Русский', es: 'Español'
+  };
+  const pathLang = window.location.pathname.split('/')[1];
+  const pageLang = langMap[pathLang] || 'Español';
+
   let sessionId = sessionStorage.getItem('fisiofelix_chat_session');
   if (!sessionId) {
     sessionId = 'web-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
@@ -246,7 +252,7 @@
       const res = await fetch(`${BACKEND}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session_id: sessionId, message: text }),
+        body: JSON.stringify({ session_id: sessionId, message: text, lang: pageLang }),
       });
       removeTyping();
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
