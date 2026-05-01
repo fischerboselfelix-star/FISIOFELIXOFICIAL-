@@ -3,13 +3,11 @@ export interface Props {
   title?: string;
   description?: string;
 }
-
 const {
   title = 'FisioFelix – Fisioterapia en Denia',
   description = 'Clínica de fisioterapia avanzada en el corazón de Denia. Deportiva, rehabilitación, masaje, pilates clínico y osteopatía. Felix Maximo Fischer.',
 } = Astro.props;
 ---
-
 <!doctype html>
 <html lang="es" class="scroll-smooth">
   <head>
@@ -17,16 +15,21 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0EA5E9" />
-
     <!-- Open Graph -->
     <meta property="og:title"       content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type"        content="website" />
     <meta property="og:locale"      content="es_ES" />
-
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
-
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-85V5YDJ3ML"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-85V5YDJ3ML');
+    </script>
     <!-- Fuentes Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,33 +37,26 @@ const {
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Figtree:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-
     <style is:global>
       *, *::before, *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
-
       html {
         font-family: 'Figtree', sans-serif;
         color: #1E293B;
         scroll-behavior: smooth;
       }
-
       h1, h2, h3, h4, h5, h6 {
         font-family: 'Outfit', sans-serif;
         letter-spacing: -0.02em;
         line-height: 1.15;
       }
-
       ::-webkit-scrollbar { width: 6px; }
       ::-webkit-scrollbar-track { background: #f1f5f9; }
       ::-webkit-scrollbar-thumb { background: #0EA5E9; border-radius: 3px; }
-
       img { max-width: 100%; height: auto; }
-
-      /* Animaciones de entrada */
       .reveal {
         opacity: 0;
         transform: translateY(24px);
@@ -72,11 +68,8 @@ const {
       }
     </style>
   </head>
-
   <body class="bg-white text-brand antialiased">
     <slot />
-
-    <!-- Intersection Observer para animaciones reveal -->
     <script>
       const revealEls = document.querySelectorAll('.reveal');
       const observer = new IntersectionObserver(
