@@ -6,12 +6,13 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
+const base = lang === 'es' ? '/' : `/${lang}/`;
 const navLinks = [
-  { label: t('nav.inicio'),    href: '#inicio' },
-  { label: t('nav.servicios'), href: '#servicios' },
-  { label: t('nav.equipo'),    href: '#equipo' },
-  { label: t('nav.ubicacion'), href: '#ubicacion' },
-  { label: t('nav.reservar'),  href: '#reservar' },
+  { label: t('nav.inicio'),    href: `${base}#inicio` },
+  { label: t('nav.servicios'), href: `${base}#servicios` },
+  { label: t('nav.equipo'),    href: `${base}#equipo` },
+  { label: t('nav.ubicacion'), href: `${base}#ubicacion` },
+  { label: t('nav.reservar'),  href: `${base}#reservar` },
 ];
 
 const langFlags: Record<Lang, string> = {
