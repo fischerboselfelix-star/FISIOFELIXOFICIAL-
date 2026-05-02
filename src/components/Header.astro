@@ -8,11 +8,11 @@ const t = useTranslations(lang);
 
 const base = lang === 'es' ? '/' : `/${lang}/`;
 const navLinks = [
-  { label: t('nav.inicio'),    href: `${base}#inicio` },
-  { label: t('nav.servicios'), href: `${base}#servicios` },
-  { label: t('nav.equipo'),    href: `${base}#equipo` },
-  { label: t('nav.ubicacion'), href: `${base}#ubicacion` },
-  { label: t('nav.reservar'),  href: `${base}#reservar` },
+  { label: t('nav.inicio'),    href: base + '#inicio' },
+  { label: t('nav.servicios'), href: base + '#servicios' },
+  { label: t('nav.equipo'),    href: base + '#equipo' },
+  { label: t('nav.ubicacion'), href: base + '#ubicacion' },
+  { label: t('nav.reservar'),  href: base + '#reservar' },
 ];
 
 const langFlags: Record<Lang, string> = {
@@ -25,7 +25,7 @@ const langFlags: Record<Lang, string> = {
     <div class="flex items-center justify-between h-16 md:h-20">
 
       <!-- Logo -->
-      <a href={ class="flex items-center gap-2.5 group" aria-label="FisioFelix">
+      <a href={base + '#inicio'} class="flex items-center gap-2.5 group" aria-label="FisioFelix">
         <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-soft group-hover:shadow-card transition-shadow duration-300">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M10 2C10 2 7 5 7 8C7 9.66 8.34 11 10 11C11.66 11 13 9.66 13 8C13 5 10 2 10 2Z" fill="white" opacity="0.9"/>
@@ -65,7 +65,7 @@ const langFlags: Record<Lang, string> = {
           </div>
         </div>
 
-        <a href={ class="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white text-sm font-semibold rounded-2xl shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-0.5">
+        <a href={base + '#reservar'} class="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white text-sm font-semibold rounded-2xl shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-0.5">
           {t('nav.reservar_ahora')}
         </a>
       </div>
@@ -98,7 +98,7 @@ const langFlags: Record<Lang, string> = {
             </a>
           ))}
         </div>
-        <a href={ class="mobile-link mt-2 px-5 py-3 bg-primary text-white text-sm font-semibold rounded-2xl text-center shadow-soft">
+        <a href={base + '#reservar'} class="mobile-link mt-2 px-5 py-3 bg-primary text-white text-sm font-semibold rounded-2xl text-center shadow-soft">
           {t('nav.reservar_ahora')}
         </a>
       </div>
