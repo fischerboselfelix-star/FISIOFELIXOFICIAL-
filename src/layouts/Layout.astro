@@ -87,4 +87,142 @@ const {
       revealEls.forEach((el) => observer.observe(el));
     </script>
   </body>
+---
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const works = [
+  {
+    name: 'FisioFelix Denia',
+    category: t('marquee.cat_fisio'),
+    image: '/work-fisiofelix.jpg',
+    url: 'https://fisiofelix.business',
+    isDemo: true,
+    isExternal: true,
+    caseStudy: null,
+    cssBg: null,
+  },
+  {
+    name: "Carl's Mangos",
+    category: t('marquee.cat_hosteleria'),
+    image: '/work-carlsmangos.jpg',
+    url: `/${lang}/trabajos/asistente-carls-mangos/`,
+    isDemo: false,
+    isExternal: false,
+    caseStudy: 'ai',  // muestra insignia "+ Asistente IA"
+    cssBg: null,
+  },
+  {
+    name: 'Óptica · Marina Alta',
+    category: t('marquee.cat_automation'),
+    image: null,
+    url: `/${lang}/trabajos/crm-opticas/`,
+    isDemo: false,
+    isExternal: false,
+    caseStudy: 'automation', // muestra insignia "+ Automatización"
+    cssBg: 'crm', // estilo de fondo CSS
+  },
+  {
+    name: 'Mediterráneo Charter',
+    category: t('marquee.cat_nautico'),
+    image: '/work-mediterraneocharter.jpg',
+    url: 'https://mediterraneo-charter-demo.vercel.app',
+    isDemo: true,
+    isExternal: true,
+    caseStudy: null,
+    cssBg: null,
+  },
+];
+---
+
+<section id="trabajos" class="py-20 md:py-28 bg-cream-deep">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    <p class="text-xs tracking-[0.2em] uppercase text-terracota mb-4 font-medium reveal">
+      {t('marquee.label').replace(/—/g, '').trim()}
+    </p>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+      {works.map((work) => (
+        <a
+          href={work.url ?? '#'}
+          target={work.url && work.isExternal ? '_blank' : undefined}
+          rel={work.url && work.isExternal ? 'noopener noreferrer' : undefined}
+          class={`group relative block aspect-[4/3] rounded-2xl overflow-hidden bg-ink ${!work.url ? 'cursor-default' : ''}`}
+        >
+          {work.image ? (
+            <img
+              src={work.image}
+              alt={t('marquee.img_alt').replace('{name}', work.name)}
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+              width="1600"
+              height="1000"
+            />
+          ) : work.cssBg === 'crm' ? (
+            <div class="absolute inset-0 bg-gradient-to-br from-ink via-ink/95 to-terracota/40 flex items-center justify-center transition-transform duration-700 group-hover:scale-105">
+              {/* Mockup decorativo de ventana de app */}
+              <div class="w-3/4 max-w-[280px] rounded-xl overflow-hidden shadow-2xl ring-1 ring-cream/10 opacity-90">
+                <div class="bg-cream/95 px-3 py-2 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-red-400/70"></span>
+                  <span class="w-2 h-2 rounded-full bg-yellow-400/70"></span>
+                  <span class="w-2 h-2 rounded-full bg-green-400/70"></span>
+                </div>
+                <div class="bg-cream-deep/95 p-4 space-y-2">
+                  <div class="h-2 bg-terracota/60 rounded w-1/3"></div>
+                  <div class="h-2 bg-ink/20 rounded w-2/3"></div>
+                  <div class="h-2 bg-ink/20 rounded w-1/2"></div>
+                  <div class="h-6 bg-terracota/30 rounded-md mt-3"></div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div class="absolute inset-0 bg-ink"></div>
+          )}
+
+          {/* Degradado oscuro inferior para legibilidad */}
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+
+          {/* Badge DEMO */}
+          {work.isDemo && (
+            <div class="absolute top-4 right-4 bg-cream/95 text-ink text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-md font-medium">
+              Demo
+            </div>
+          )}
+
+          {/* Badge "+ Asistente IA" */}
+          {work.caseStudy === 'ai' && (
+            <div class="absolute top-4 right-4 bg-terracota/95 text-cream text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-md font-medium flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-cream"></span>
+              {t('marquee.badge_ai')}
+            </div>
+          )}
+
+          {/* Badge "+ Automatización" */}
+          {work.caseStudy === 'automation' && (
+            <div class="absolute top-4 right-4 bg-sea/95 text-cream text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-md font-medium flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-cream"></span>
+              {t('marquee.badge_automation')}
+            </div>
+          )}
+
+          {/* Texto inferior */}
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <div class="text-[10px] tracking-[0.15em] uppercase text-terracota-soft mb-2">
+              {work.category}
+            </div>
+            <h3 class="text-xl md:text-2xl font-medium text-cream tracking-[-0.01em] flex items-center gap-2">
+              {work.name}
+              {work.url && (
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity text-base">↗</span>
+              )}
+            </h3>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
 </html>
