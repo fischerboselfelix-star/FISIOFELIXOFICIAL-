@@ -6,8 +6,13 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const calendar30min = "https://calendar.app.google/tE5VwaKukRR1SiFE6";
-const calendar1hora = "https://calendar.app.google/NPBzF8L7GMyavmgv5";
+const demoNotice = {
+  es: 'Reservas desactivadas: esta web es una demostración y no es una clínica real.',
+  en: 'Booking disabled: this website is a demo, not a real clinic.',
+  de: 'Buchung deaktiviert: Diese Website ist eine Demo, keine echte Praxis.',
+  fr: 'Réservations désactivées : ce site est une démo, pas une vraie clinique.',
+  ru: 'Запись отключена: это демонстрационный сайт, а не настоящая клиника.',
+}[lang] ?? 'Booking disabled: this website is a demo, not a real clinic.';
 
 const pricing = [
   { id: 'short', label: t('booking.t1_label'), price: '25€', desc: t('booking.t1_desc'), popular: false },
@@ -49,16 +54,7 @@ const pricing = [
               </div>
             ))}
           </div>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a href={calendar30min} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 flex-1 px-5 py-3.5 bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold text-sm rounded-2xl shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition-all duration-300">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              {t('booking.t1_label')}
-            </a>
-            <a href={calendar1hora} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 flex-1 px-5 py-3.5 bg-primary hover:bg-primary-dark text-white font-semibold text-sm rounded-2xl shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition-all duration-300">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              {t('booking.t2_label')}
-            </a>
-          </div>
+          <div class="rounded-2xl bg-amber-50 border border-amber-200 px-5 py-4 text-sm font-medium text-amber-800">{demoNotice}</div>
           <p class="text-xs text-slate-400 mt-3 flex items-center justify-center gap-1">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             {t('booking.secure')}
