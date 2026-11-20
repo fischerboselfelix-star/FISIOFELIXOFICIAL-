@@ -10,7 +10,6 @@ import Testimonials from '../components/Testimonials.astro';
 import Location from '../components/Location.astro';
 import Footer from '../components/Footer.astro';
 import ChatWidget from '../components/ChatWidget.astro';
-import WhatsAppButton from '../components/WhatsAppButton.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -27,7 +26,6 @@ const t = useTranslations(lang);
     <Location lang={lang} />
   </main>
   <Footer lang={lang} />
-  <WhatsAppButton />
   <ChatWidget />
   <script>
     const supported = ['en', 'de', 'fr', 'ru'];

@@ -260,7 +260,7 @@
       appendMessage(data.reply, 'bot');
     } catch (err) {
       removeTyping();
-      appendMessage('Lo siento, ha ocurrido un error. Por favor escríbenos por WhatsApp al +34 617 62 70 16.', 'bot');
+      appendMessage('Lo siento, ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.', 'bot');
       console.error('[ChatWidget]', err);
     } finally {
       sendBtn.disabled = false;
